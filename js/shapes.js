@@ -26,6 +26,15 @@ window.onload = function() {
  */
 
 const sayHello = function() {
+  let canvas = document.getElementById("student-canvas-1");
+  let context = canvas.getContext("2d");
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  let message = ("");
+  do {
+    message = window.prompt("Message:");
+  } while (message.length > 50);
+  context.font = "48px sans-serif"
+  context.strokeText(message, 30, 70);
     // write your exercise 1 code here
 };
 
