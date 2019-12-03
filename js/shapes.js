@@ -19,6 +19,7 @@ window.onload = function() {
     // equivalent set of six event listeners for your solutions. the first one is done for you.
 
     document.getElementById("hello").onclick = sayHello;
+    document.getElementById("rectangle").onclick = drawRectange;
 }
 
 /*
@@ -26,15 +27,15 @@ window.onload = function() {
  */
 
 const sayHello = function() {
-  let canvas = document.getElementById("student-canvas-1");
-  let context = canvas.getContext("2d");
-  context.clearRect(0, 0, canvas.width, canvas.height);
+  let canvas1 = document.getElementById("student-canvas-1");
+  let context1 = canvas1.getContext("2d");
+  context1.clearRect(0, 0, canvas1.width, canvas1.height);
   let message = ("");
   do {
     message = window.prompt("Message:");
   } while (message.length > 50);
-  context.font = "48px sans-serif"
-  context.strokeText(message, 30, 70);
+  context1.font = "48px sans-serif"
+  context1.strokeText(message, 30, 70);
     // write your exercise 1 code here
 };
 
@@ -43,6 +44,17 @@ const sayHello = function() {
  */
 
 const drawRectangle = function() {
+  let canvas2 = document.getElementById("student-canvas-2");
+  let context2 = canvas2.getContext("2d");
+  context2.clearRect(0, 0, canvas.width2, canvas2.height);
+  let width = 0;
+  let height = 0;
+  let x = 0;
+  let y = 0;
+  do {
+    
+  }
+
     // write your exercise 2 code here
 };
 
