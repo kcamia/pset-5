@@ -46,14 +46,22 @@ const sayHello = function() {
 const drawRectangle = function() {
   let canvas2 = document.getElementById("student-canvas-2");
   let context2 = canvas2.getContext("2d");
-  context2.clearRect(0, 0, canvas.width2, canvas2.height);
+  context2.clearRect(0, 0, canvas2.width, canvas2.height);
   let width = 0;
   let height = 0;
   let x = 0;
   let y = 0;
   do {
-    
-  }
+    width = window.prompt("Width:");
+  } while (width < 1 || width > canvas.width2);
+  do {
+    height = window.prompt("Height:");
+  } while (height < 1 || height > canvas2.height);
+  do {
+    x = window.prompt("X:");
+    y = window.prompt("Y:");
+  } while (x < 1 || y < 1);
+  context2.strokeRect(x, y, width, height);
 
     // write your exercise 2 code here
 };
@@ -63,6 +71,18 @@ const drawRectangle = function() {
  */
 
 const drawColoredRectangle = function() {
+  let canvas3 = document.getElementById("student-canvas-3");
+  let context3 = canvas3.getContext("2d");
+  context3.clearRect(0, 0, canvas3.width, canvas3.height);
+  let color = "";
+  do {
+    color = window.prompt("Color:");
+    color = color.toLowerCase();
+  } while (color != "black" || color != "blue" || color != "green" || color != "orange" || color != "purple" || color != "red" || color != "yellow");
+  context3.beginPath();
+  context3.rect(10, 10, 100, 50);
+  context3.fillStyle = color;
+  context3.fill();
     // write your exercise 3 code here
 };
 
