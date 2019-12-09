@@ -46,7 +46,7 @@ const sayHello = function() {
 };
 
 /*
- * Exercise 2.
+ * Exercise 2
  */
 
 const drawRectangle = function() {
