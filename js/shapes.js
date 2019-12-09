@@ -57,25 +57,44 @@ const drawRectangle = function() {
   let height = 0;
   let x = 0;
   let y = 0;
+  let status;
+  let cancel;
   do {
+    status = true;
     width = window.prompt("Width:");
     height = window.prompt("Height:");
     x = window.prompt("X:");
     y = window.prompt("Y:");
-    if (width < 1 || width > canvas2.width) {
-      window.alert("Your width must be between 1 and 1024.");
+    if (width == null && height == null && x == null && y == null) {
+      cancel = true;
+      status = "stop";
     }
-    if (height < 1 || height > canvas2.height) {
-      window.alert("Your height must be between 1 and 512.")
+    if (status == true) {
+      cancel = false;
+
+      if ((width < 1 && status == true) || (width > canvas2.width && status == true)) {
+        window.alert("Your width must be between 1 and 1024.");
+        status = false;
+      } else if ((height < 1 && status == true) || (height > canvas2.height && status == true)) {
+        window.alert("Your height must be between 1 and 512.");
+        status == false;
+      } else if ((x < 1 && status == true) || (x > canvas2.width && status == true)) {
+        window.alert("Your x-coordinate must be between 1 and 1024.");
+        status = false;
+      } else if ((y < 1 && status == true) || (y > canvas2.height && status == true)) {
+        window.alert("Your y-coordinate must be between 1 and 512.");
+        status == false
+      }
+    } else {
+      cancel = true;
     }
-    if (x < 1 || x > canvas2.width) {
-      window.alert("Your x-coordinate must be between 1 and 1024.")
-    }
-    if (y < 1 || y > canvas2.height) {
-      window.alert("Your y-coordinate must be between 1 and 512.")
-    }
-  } while (width < 1 || width > canvas.width2 || height < 1 || height > canvas2.height || x < 1 || y < 1);
-  context2.strokeRect(x, y, width, height);
+  } while (cancel !== true || status == false || status !== "stop" || width < 1 || width > canvas2.width || height < 1 || height > canvas2.height || x < 1 || y < 1);
+
+  if (cancel == true) {
+    context2.clearRect(0, 0, canvas2.width, canvas2.height);
+  } else {
+    context2.strokeRect(x, y, width, height);
+  }
     // write your exercise 2 code here
 };
 
@@ -199,7 +218,7 @@ const drawFace = function() {
       window.prompt("Your radius is not a number.")
       status = false;
     }
-    if ((Number.isInteger(radius) && radius < 32) || (Number.isInteger(radius) && radius < half) {
+    if ((Number.isInteger(radius) && radius < 32) || (Number.isInteger(radius) && radius < half)) {
       window.prompt("Your smiley face won't fit on the canvas.")
     }
   } while (Number.isNaN(radius) || radius < 32 || radius < half || status == false)
