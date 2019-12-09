@@ -19,7 +19,10 @@ window.onload = function() {
     // equivalent set of six event listeners for your solutions. the first one is done for you.
 
     document.getElementById("hello").onclick = sayHello;
-    document.getElementById("rectangle").onclick = drawRectange;
+    document.getElementById("rectangle").onclick = drawRectangle;
+    document.getElementById("colored-rectangle").onclick = drawColoredRectangle;
+    document.getElementById("triangle").onclick = drawTriangle;
+    document.getElementById("smile").onclick = drawFace;
 }
 
 /*
@@ -33,6 +36,9 @@ const sayHello = function() {
   let message = ("");
   do {
     message = window.prompt("Message:");
+    if (message.length > 50) {
+      window.alert("Your message is too long. Keep it under 50 characters.")
+    }
   } while (message.length > 50);
   context1.font = "48px sans-serif"
   context1.strokeText(message, 30, 70);
@@ -53,16 +59,23 @@ const drawRectangle = function() {
   let y = 0;
   do {
     width = window.prompt("Width:");
-  } while (width < 1 || width > canvas.width2);
-  do {
     height = window.prompt("Height:");
-  } while (height < 1 || height > canvas2.height);
-  do {
     x = window.prompt("X:");
     y = window.prompt("Y:");
-  } while (x < 1 || y < 1);
+    if (width < 1 || width > canvas2.width) {
+      window.alert("Your width must be between 1 and 1024.");
+    }
+    if (height < 1 || height > canvas2.height) {
+      window.alert("Your height must be between 1 and 512.")
+    }
+    if (x < 1 || x > canvas2.width) {
+      window.alert("Your x-coordinate must be between 1 and 1024.")
+    }
+    if (y < 1 || y > canvas2.height) {
+      window.alert("Your y-coordinate must be between 1 and 512.")
+    }
+  } while (width < 1 || width > canvas.width2 || height < 1 || height > canvas2.height || x < 1 || y < 1);
   context2.strokeRect(x, y, width, height);
-
     // write your exercise 2 code here
 };
 
@@ -75,14 +88,41 @@ const drawColoredRectangle = function() {
   let context3 = canvas3.getContext("2d");
   context3.clearRect(0, 0, canvas3.width, canvas3.height);
   let color = "";
+  let input = "";
+  let fill;
   do {
-    color = window.prompt("Color:");
-    color = color.toLowerCase();
-  } while (color != "black" || color != "blue" || color != "green" || color != "orange" || color != "purple" || color != "red" || color != "yellow");
-  context3.beginPath();
-  context3.rect(10, 10, 100, 50);
-  context3.fillStyle = color;
-  context3.fill();
+    input = window.prompt("Color:");
+    color = input.toLowerCase();
+    switch (color) {
+      case "black":
+        fill = "black";
+        break;
+      case "blue":
+        fill = "blue";
+        break;
+      case "green":
+        fill = "green";
+        break;
+      case "orange":
+        fill = "orange";
+        break;
+      case "purple":
+        fill = "purple";
+        break;
+      case "red":
+        fill = "red";
+        break;
+      case "yellow":
+        fill = "yellow";
+        break;
+      default:
+        window.alert(input + " is not a supported color.");
+        fill = false;
+        break;
+    }
+  } while (fill == false);
+  context3.fillStyle = fill;
+  context3.fillRect(10, 10, 100, 50);
     // write your exercise 3 code here
 };
 
@@ -91,6 +131,53 @@ const drawColoredRectangle = function() {
  */
 
 const drawTriangle = function() {
+  let canvas4 = document.getElementById("student-canvas-4");
+  let context4 = canvas4.getContext("2d");
+  context4.clearRect(0, 0, canvas4.width, canvas4.height);
+  let side1 = 0;
+  let side2 = 0;
+  let side3 = 0;
+  let height = 0;
+  let hypotenuse = 0;
+  let base = 0;
+  let check = 0;
+  let status;
+  do {
+    side1 = Number(window.prompt("Side 1:"));
+    side2 = Number(window.prompt("Side 2:"));
+    side3 = Number(window.prompt("Side 3:"));
+    status = true;
+    if (Number.isNaN(side1) || Number.isNaN(side2) || Number.isNaN(side3)) {
+      window.alert("One of your sides is not a number.");
+      status = false;
+    }
+    hypotenuse = Math.max(side1, side2, side3);
+    height = Math.min(side1, side2, side3);
+    if ((side1 == hypotenuse && side2 == height) || (side1 == height && side2 == hypotenuse)) {
+      base = side3
+    }
+    if ((side2 == hypotenuse && side3 == height) || (side2 == height && side3 == hypotenuse)) {
+      base = side1
+    }
+    if ((side1 == hypotenuse && side3 == height) || (side1 == height && side3 == hypotenuse)) {
+      base = side2
+    }
+    check = Math.hypot(height, base);
+    if (check !== hypotenuse && status == true) {
+      window.alert("That's not a valid right triangle.");
+      status = false;
+    }
+    if (height > canvas4.height || base > canvas4.width && status == true) {
+      window.alert("Your triangle won't fit on the canvas.")
+    }
+  } while (Number.isNaN(side1) || Number.isNaN(side2) || Number.isNaN(side3) || check !== hypotenuse || height > canvas4.height || base > canvas4.width || status == false);
+  let heightPoint = height + 25;
+  let basePoint = base + 25;
+  context4.moveTo(25, 25);
+  context4.lineTo(25, heightPoint);
+  context4.lineTo(basePoint, heightPoint);
+  context4.closePath();
+  context4.stroke();
     // write your exercise 4 code here
 };
 
@@ -99,7 +186,24 @@ const drawTriangle = function() {
  */
 
 const drawFace = function() {
-    // write your exercise 4 code here
+  let canvas5 = document.getElementById("student-canvas-5");
+  let context5 = canvas5.getContext("2d");
+  context5.clearRect(0, 0, canvas5.width, canvas5.height);
+  let radius = 0;
+  let status;
+  do {
+    radius = Number(window.prompt("Radius:"));
+    status = true;
+    let half = canvas5.height / 2;
+    if (Number.isNaN(radius)) {
+      window.prompt("Your radius is not a number.")
+      status = false;
+    }
+    if ((Number.isInteger(radius) && radius < 32) || (Number.isInteger(radius) && radius < half) {
+      window.prompt("Your smiley face won't fit on the canvas.")
+    }
+  } while (Number.isNaN(radius) || radius < 32 || radius < half || status == false)
+    // write your exercise 5 code here
 };
 
 /*
@@ -107,5 +211,5 @@ const drawFace = function() {
  */
 
 const drawPyramid = function() {
-    // write your exercise 5 code here
+    // write your exercise 6 code here
 };
