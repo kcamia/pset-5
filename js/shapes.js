@@ -54,10 +54,10 @@ const drawRectangle = function() {
   let canvas = document.getElementById("student-canvas-2");
   let context = canvas.getContext("2d");
   context.clearRect(0, 0, canvas.width, canvas.height);
-  let width;
-  let height;
-  let x;
-  let y;
+  let width = 0;
+  let height = 0;
+  let x = 0;
+  let y = 0;
   let status;
   do {
     status = true;
@@ -65,8 +65,12 @@ const drawRectangle = function() {
     height = Number(window.prompt("Height:"));
     x = Number(window.prompt("X:"));
     y = Number(window.prompt("Y:"));
-    if (!Number.isInteger(width) && !Number.isInteger(height) && !Number.isInteger(x) && !Number.isInteger(y)) {
-    status = true;
+    let test1 = Boolean(width);
+    let test2 = Boolean(height);
+    let test3 = Boolean(x);
+    let test4 = Boolean(y)
+    if (test1 == false && test2 == false && test3 == false && test4 == false) {
+      status = true;
     } else if ((!Number.NaN && width < 1) || (!Number.NaN && width > canvas.width)) {
       window.alert("Your width must be between 1 and 1024.");
       status = false;
@@ -83,7 +87,11 @@ const drawRectangle = function() {
       status = true;
     }
   } while (status == false);
-  if (Number.isNaN(width) && Number.isNaN(height) && Number.isNaN(x) && Number.isNaN(y)) {
+  let test1 = Boolean(width);
+  let test2 = Boolean(height);
+  let test3 = Boolean(x);
+  let test4 = Boolean(y);
+  if (test1 == false && test2 == false && test3 == false && test4 == false) {
     context.clearRect(0, 0, canvas.width, canvas.height);
   } else {
     context.strokeRect(x, y, width, height);
@@ -102,40 +110,60 @@ const drawColoredRectangle = function() {
   let color = "";
   let input = "";
   let fill;
+  let status;
+  let test;
   do {
     input = window.prompt("Color:");
-    color = input.toLowerCase();
-    switch (color) {
-      case "black":
-        fill = "black";
-        break;
-      case "blue":
-        fill = "blue";
-        break;
-      case "green":
-        fill = "green";
-        break;
-      case "orange":
-        fill = "orange";
-        break;
-      case "purple":
-        fill = "purple";
-        break;
-      case "red":
-        fill = "red";
-        break;
-      case "yellow":
-        fill = "yellow";
-        break;
-      default:
-        window.alert(input + " is not a supported color.");
-        fill = false;
-        break;
+    status;
+    test = Boolean(input);
+    if (test == false) {
+      status = false;
+    } else {
+      color = input.toLowerCase();
+      switch (color) {
+        case "black":
+          fill = "black";
+          status = false;
+          break;
+        case "blue":
+          fill = "blue";
+          status = false;
+          break;
+        case "green":
+          fill = "green";
+          status = false;
+          break;
+        case "orange":
+          fill = "orange";
+          status = false;
+          break;
+        case "purple":
+          fill = "purple";
+          status = false;
+          break;
+        case "red":
+          fill = "red";
+          status = false;
+          break;
+        case "yellow":
+          fill = "yellow";
+          status = false;
+          break;
+        default:
+          window.alert(input + " is not a supported color.");
+          fill = false;
+          status = true;
+          break;
+      }
     }
-  } while (fill == false);
-  context.fillStyle = fill;
-  context.fillRect(10, 10, 100, 50);
-    // write your exercise 3 code here
+  } while (status == true);
+  if (test == false) {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+  } else {
+    context.fillStyle = fill;
+    context.fillRect(10, 10, 100, 50);
+  }
+      // write your exercise 3 code here
 };
 
 /*
@@ -224,6 +252,7 @@ const drawFace = function() {
   let radiusMouth = radiusHead * 0.7;
   window.alert(radiusHead + radiusEye + radiusMouth)
   context.beginPath();
+  context.moveTo(canvas.width / 2, canvas.height / 2);
   context.arc(canvas.width / 2, canvas.height / 2, 70, 0, 2 * Math.PI, true);
   context.closePath();
   context.fill();
@@ -248,18 +277,18 @@ const drawPyramid = function() {
     if (test == false) {
       status = true;
     } else if (Number.isNaN(sideLength)) {
-      window.alert("Your block size is not a number.")
+      window.alert("Your block size is not a number.");;
       status = false;
     } else if (sideLength < 1) {
-      window.alert("Your block size must be at least 1.")
+      window.alert("Your block size must be at least 1.");
       status = false;
     } else if (sideLength > 100) {
-      window.alert("Your pyramid won't fit on the canvas.")
+      window.alert("Your pyramid won't fit on the canvas.");
       status = false;
     } else {
       status = true;
     }
-  } while (status == false || test == false || sideLength < 1 || sideLength > 100);
+  } while (status == false || test == true || sideLength < 1 || sideLength > 100);
 
     // write your exercise 6 code here
 };
