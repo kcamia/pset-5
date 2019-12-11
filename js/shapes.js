@@ -30,9 +30,9 @@ window.onload = function() {
  */
 
 const sayHello = function() {
-  let canvas1 = document.getElementById("student-canvas-1");
-  let context1 = canvas1.getContext("2d");
-  context1.clearRect(0, 0, canvas1.width, canvas1.height);
+  let canvas = document.getElementById("student-canvas-1");
+  let context = canvas.getContext("2d");
+  context.clearRect(0, 0, canvas.width, canvas.height);
   let message = ("");
   do {
     message = window.prompt("Message:");
@@ -40,8 +40,8 @@ const sayHello = function() {
       window.alert("Your message is too long. Keep it under 50 characters.")
     }
   } while (message.length > 50);
-  context1.font = "48px sans-serif"
-  context1.strokeText(message, 30, 70);
+  context.font = "48px sans-serif"
+  context.strokeText(message, 30, 70);
     // write your exercise 1 code here
 };
 
@@ -50,50 +50,42 @@ const sayHello = function() {
  */
 
 const drawRectangle = function() {
-  let canvas2 = document.getElementById("student-canvas-2");
-  let context2 = canvas2.getContext("2d");
-  context2.clearRect(0, 0, canvas2.width, canvas2.height);
+  let canvas = document.getElementById("student-canvas-2");
+  let context = canvas.getContext("2d");
+  context.clearRect(0, 0, canvas.width, canvas.height);
   let width = 0;
   let height = 0;
   let x = 0;
   let y = 0;
   let status;
-  let cancel;
   do {
     status = true;
     width = window.prompt("Width:");
     height = window.prompt("Height:");
     x = window.prompt("X:");
     y = window.prompt("Y:");
-    if (width == null && height == null && x == null && y == null) {
-      cancel = true;
-      status = "stop";
-    }
-    if (status == true) {
-      cancel = false;
-
-      if ((width < 1 && status == true) || (width > canvas2.width && status == true)) {
-        window.alert("Your width must be between 1 and 1024.");
-        status = false;
-      } else if ((height < 1 && status == true) || (height > canvas2.height && status == true)) {
-        window.alert("Your height must be between 1 and 512.");
-        status == false;
-      } else if ((x < 1 && status == true) || (x > canvas2.width && status == true)) {
-        window.alert("Your x-coordinate must be between 1 and 1024.");
-        status = false;
-      } else if ((y < 1 && status == true) || (y > canvas2.height && status == true)) {
-        window.alert("Your y-coordinate must be between 1 and 512.");
-        status == false
-      }
+    if ((!Number.isNaN && !(width >= 1)) || (!Number.isNaN && !(width <= canvas.width))) {
+      window.alert("Your width must be between 1 and 1024.");
+      status = false;
+    } else if ((!Number.isNaN && !(height >= 1)) || (!Number.isNaN && !(height <= canvas.height))) {
+      window.alert("Your height must be between 1 and 512.");
+      status = false;
+    } else if ((!Number.isNaN && !(x >= 1)) || (!Number.isNaN && !(x <= canvas.width))) {
+      window.alert("Your x coordinate must be between 1 and 1024.");
+      status = false;
+    } else if ((!Number.isNaN && !(y >= 1)) || (!Number.isNaN && !(y <= canvas.height))) {
+      window.alert("Your y coordinate must be between 1 and 512.");
+      status = false;
+    } else if (!Number.isInteger(width) && !Number.isInteger(height) && !Number.isInteger(x) && !Number.isInteger(y)) {
+      status = true;
     } else {
-      cancel = true;
+      status = true;
     }
-  } while (cancel !== true || status == false || status !== "stop" || width < 1 || width > canvas2.width || height < 1 || height > canvas2.height || x < 1 || y < 1);
-
-  if (cancel == true) {
-    context2.clearRect(0, 0, canvas2.width, canvas2.height);
+  } while (status == false);
+  if (Number.isNaN(width) && Number.isNaN(height) && Number.isNaN(x) && Number.isNaN(y)) {
+    context.clearRect(0, 0, canvas.width, canvas.height);
   } else {
-    context2.strokeRect(x, y, width, height);
+    context.strokeRect(x, y, width, height);
   }
     // write your exercise 2 code here
 };
@@ -103,9 +95,9 @@ const drawRectangle = function() {
  */
 
 const drawColoredRectangle = function() {
-  let canvas3 = document.getElementById("student-canvas-3");
-  let context3 = canvas3.getContext("2d");
-  context3.clearRect(0, 0, canvas3.width, canvas3.height);
+  let canvas = document.getElementById("student-canvas-3");
+  let context = canvas.getContext("2d");
+  context.clearRect(0, 0, canvas.width, canvas.height);
   let color = "";
   let input = "";
   let fill;
@@ -140,8 +132,8 @@ const drawColoredRectangle = function() {
         break;
     }
   } while (fill == false);
-  context3.fillStyle = fill;
-  context3.fillRect(10, 10, 100, 50);
+  context.fillStyle = fill;
+  context.fillRect(10, 10, 100, 50);
     // write your exercise 3 code here
 };
 
@@ -150,9 +142,9 @@ const drawColoredRectangle = function() {
  */
 
 const drawTriangle = function() {
-  let canvas4 = document.getElementById("student-canvas-4");
-  let context4 = canvas4.getContext("2d");
-  context4.clearRect(0, 0, canvas4.width, canvas4.height);
+  let canvas = document.getElementById("student-canvas-4");
+  let context = canvas.getContext("2d");
+  context.clearRect(0, 0, canvas.width, canvas.height);
   let side1 = 0;
   let side2 = 0;
   let side3 = 0;
@@ -186,17 +178,17 @@ const drawTriangle = function() {
       window.alert("That's not a valid right triangle.");
       status = false;
     }
-    if (height > canvas4.height || base > canvas4.width && status == true) {
+    if (height > canvas.height || base > canvas.width && status == true) {
       window.alert("Your triangle won't fit on the canvas.")
     }
-  } while (Number.isNaN(side1) || Number.isNaN(side2) || Number.isNaN(side3) || check !== hypotenuse || height > canvas4.height || base > canvas4.width || status == false);
+  } while (Number.isNaN(side1) || Number.isNaN(side2) || Number.isNaN(side3) || check !== hypotenuse || height > canvas.height || base > canvas.width || status == false);
   let heightPoint = height + 25;
   let basePoint = base + 25;
-  context4.moveTo(25, 25);
-  context4.lineTo(25, heightPoint);
-  context4.lineTo(basePoint, heightPoint);
-  context4.closePath();
-  context4.stroke();
+  context.moveTo(25, 25);
+  context.lineTo(25, heightPoint);
+  context.lineTo(basePoint, heightPoint);
+  context.closePath();
+  context.stroke();
     // write your exercise 4 code here
 };
 
@@ -205,23 +197,35 @@ const drawTriangle = function() {
  */
 
 const drawFace = function() {
-  let canvas5 = document.getElementById("student-canvas-5");
-  let context5 = canvas5.getContext("2d");
-  context5.clearRect(0, 0, canvas5.width, canvas5.height);
-  let radius = 0;
+  let canvas = document.getElementById("student-canvas-5");
+  let context = canvas.getContext("2d");
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  let radiusHead;
   let status;
   do {
-    radius = Number(window.prompt("Radius:"));
+    radiusHead = window.prompt("Radius:");
     status = true;
-    let half = canvas5.height / 2;
-    if (Number.isNaN(radius)) {
-      window.prompt("Your radius is not a number.")
+    let half = canvas.height / 2;
+    if (Number.isNaN(radiusHead)) {
+      window.alert("Your radius is not a number.")
       status = false;
+    } else if (radiusHead < 32) {
+      window.alert("Your radius must be at least 32.")
+      status = false;
+    } else if (radiusHead > half) {
+      window.alert("Your smiley face won't fit on the canvas.")
+      status = false;
+    } else {
+      status = true;
     }
-    if ((Number.isInteger(radius) && radius < 32) || (Number.isInteger(radius) && radius < half)) {
-      window.prompt("Your smiley face won't fit on the canvas.")
-    }
-  } while (Number.isNaN(radius) || radius < 32 || radius < half || status == false)
+  } while (Number.isNaN(radiusHead) || radiusHead < 32 || radiusHead < half || status == false);
+  let radiusEye = radiusHead * 0.15;
+  let radiusMouth = radiusHead * 0.7;
+  context.beginPath();
+  context.arc(canvas.width / 2, canvas.height / 2, 70, 0, 2 * Math.PI, true);
+  context.closePath();
+  context.fill();
+
     // write your exercise 5 code here
 };
 
