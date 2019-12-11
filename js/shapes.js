@@ -23,6 +23,7 @@ window.onload = function() {
     document.getElementById("colored-rectangle").onclick = drawColoredRectangle;
     document.getElementById("triangle").onclick = drawTriangle;
     document.getElementById("smile").onclick = drawFace;
+    document.getElementById("pyramid").onclick = drawPyramid;
 }
 
 /*
@@ -53,18 +54,20 @@ const drawRectangle = function() {
   let canvas = document.getElementById("student-canvas-2");
   let context = canvas.getContext("2d");
   context.clearRect(0, 0, canvas.width, canvas.height);
-  let width = 0;
-  let height = 0;
-  let x = 0;
-  let y = 0;
+  let width;
+  let height;
+  let x;
+  let y;
   let status;
   do {
     status = true;
-    width = window.prompt("Width:");
-    height = window.prompt("Height:");
-    x = window.prompt("X:");
-    y = window.prompt("Y:");
-    if ((!Number.isNaN && !(width >= 1)) || (!Number.isNaN && !(width <= canvas.width))) {
+    width = Number(window.prompt("Width:"));
+    height = Number(window.prompt("Height:"));
+    x = Number(window.prompt("X:"));
+    y = Number(window.prompt("Y:"));
+    if (!Number.isInteger(width) && !Number.isInteger(height) && !Number.isInteger(x) && !Number.isInteger(y)) {
+    status = true;
+    } else if ((!Number.NaN && width < 1) || (!Number.NaN && width > canvas.width)) {
       window.alert("Your width must be between 1 and 1024.");
       status = false;
     } else if ((!Number.isNaN && !(height >= 1)) || (!Number.isNaN && !(height <= canvas.height))) {
@@ -76,8 +79,6 @@ const drawRectangle = function() {
     } else if ((!Number.isNaN && !(y >= 1)) || (!Number.isNaN && !(y <= canvas.height))) {
       window.alert("Your y coordinate must be between 1 and 512.");
       status = false;
-    } else if (!Number.isInteger(width) && !Number.isInteger(height) && !Number.isInteger(x) && !Number.isInteger(y)) {
-      status = true;
     } else {
       status = true;
     }
@@ -200,7 +201,7 @@ const drawFace = function() {
   let canvas = document.getElementById("student-canvas-5");
   let context = canvas.getContext("2d");
   context.clearRect(0, 0, canvas.width, canvas.height);
-  let radiusHead;
+  let radiusHead = 0;
   let status;
   do {
     radiusHead = window.prompt("Radius:");
@@ -221,6 +222,7 @@ const drawFace = function() {
   } while (Number.isNaN(radiusHead) || radiusHead < 32 || radiusHead < half || status == false);
   let radiusEye = radiusHead * 0.15;
   let radiusMouth = radiusHead * 0.7;
+  window.alert(radiusHead + radiusEye + radiusMouth)
   context.beginPath();
   context.arc(canvas.width / 2, canvas.height / 2, 70, 0, 2 * Math.PI, true);
   context.closePath();
@@ -234,5 +236,30 @@ const drawFace = function() {
  */
 
 const drawPyramid = function() {
+  let canvas = document.getElementById("student-canvas-6");
+  let context = canvas.getContext("2d");
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  let sideLength;
+  let status = true;
+  do {
+    status = true;
+    sideLength = Number(window.prompt("Side:"));
+    let test = Boolean(sideLength);
+    if (test == false) {
+      status = true;
+    } else if (Number.isNaN(sideLength)) {
+      window.alert("Your block size is not a number.")
+      status = false;
+    } else if (sideLength < 1) {
+      window.alert("Your block size must be at least 1.")
+      status = false;
+    } else if (sideLength > 100) {
+      window.alert("Your pyramid won't fit on the canvas.")
+      status = false;
+    } else {
+      status = true;
+    }
+  } while (status == false || test == false || sideLength < 1 || sideLength > 100);
+
     // write your exercise 6 code here
 };
