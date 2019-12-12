@@ -35,14 +35,27 @@ const sayHello = function() {
   let context = canvas.getContext("2d");
   context.clearRect(0, 0, canvas.width, canvas.height);
   let message = ("");
+  let test;
+  let status;
   do {
+    status;
     message = window.prompt("Message:");
-    if (message.length > 50) {
+    test = Boolean(message);
+    if (test == false) {
+      status = true;
+    } else if (message.length > 50) {
       window.alert("Your message is too long. Keep it under 50 characters.")
+      status = false;
+    } else {
+      status = true;
     }
-  } while (message.length > 50);
-  context.font = "48px sans-serif"
-  context.strokeText(message, 30, 70);
+  } while (status == false || message.length > 50);
+  if (test == false) {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+  } else {
+    context.font = "48px sans-serif"
+    context.strokeText(message, 30, 70);
+  }
     // write your exercise 1 code here
 };
 
@@ -186,38 +199,58 @@ const drawTriangle = function() {
     side1 = Number(window.prompt("Side 1:"));
     side2 = Number(window.prompt("Side 2:"));
     side3 = Number(window.prompt("Side 3:"));
-    status = true;
-    if (Number.isNaN(side1) || Number.isNaN(side2) || Number.isNaN(side3)) {
-      window.alert("One of your sides is not a number.");
-      status = false;
-    }
-    hypotenuse = Math.max(side1, side2, side3);
-    height = Math.min(side1, side2, side3);
-    if ((side1 == hypotenuse && side2 == height) || (side1 == height && side2 == hypotenuse)) {
-      base = side3
-    }
-    if ((side2 == hypotenuse && side3 == height) || (side2 == height && side3 == hypotenuse)) {
-      base = side1
-    }
-    if ((side1 == hypotenuse && side3 == height) || (side1 == height && side3 == hypotenuse)) {
-      base = side2
-    }
-    check = Math.hypot(height, base);
-    if (check !== hypotenuse && status == true) {
-      window.alert("That's not a valid right triangle.");
-      status = false;
-    }
-    if (height > canvas.height || base > canvas.width && status == true) {
-      window.alert("Your triangle won't fit on the canvas.")
+    status;
+    let test1 = Boolean(side1);
+    let test2 = Boolean(side2);
+    let test3 = Boolean(side3);
+    if (test1 == false && test2 == false && test3 == false) {
+      status = true;
+      context.clearRect(0, 0, canvas.width, canvas.height);
+    } else {
+      status = true;
+      if (Number.isNaN(side1) || Number.isNaN(side2) || Number.isNaN(side3)) {
+        window.alert("One of your sides is not a number.");
+        status = false;
+      }
+      hypotenuse = Math.max(side1, side2, side3);
+      height = Math.min(side1, side2, side3);
+      if ((side1 == hypotenuse && side2 == height) || (side1 == height && side2 == hypotenuse)) {
+        base = side3
+      }
+      if ((side2 == hypotenuse && side3 == height) || (side2 == height && side3 == hypotenuse)) {
+        base = side1
+      }
+      if ((side1 == hypotenuse && side3 == height) || (side1 == height && side3 == hypotenuse)) {
+        base = side2
+      }
+      check = Math.hypot(height, base);
+      if (check !== hypotenuse && status == true) {
+        window.alert("That's not a valid right triangle.");
+        status = false;
+      } else if (height > canvas.height || base > canvas.width && status == true) {
+        window.alert("Your triangle won't fit on the canvas.");
+      } else {
+        status = true;
+        context.clearRect(0, 0, canvas.width, canvas.height);
+      }
     }
   } while (Number.isNaN(side1) || Number.isNaN(side2) || Number.isNaN(side3) || check !== hypotenuse || height > canvas.height || base > canvas.width || status == false);
   let heightPoint = height + 25;
   let basePoint = base + 25;
-  context.moveTo(25, 25);
-  context.lineTo(25, heightPoint);
-  context.lineTo(basePoint, heightPoint);
-  context.closePath();
-  context.stroke();
+  let test1 = Boolean(side1);
+  let test2 = Boolean(side2);
+  let test3 = Boolean(side3);
+  if (test1 == false && test2 == false && test3 == false) {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+  } else {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.moveTo(25, 25);
+    context.lineTo(25, heightPoint);
+    context.lineTo(basePoint, heightPoint);
+    context.closePath();
+    context.stroke();
+  }
+
     // write your exercise 4 code here
 };
 
@@ -229,33 +262,54 @@ const drawFace = function() {
   let canvas = document.getElementById("student-canvas-5");
   let context = canvas.getContext("2d");
   context.clearRect(0, 0, canvas.width, canvas.height);
-  let radiusHead = 0;
+  let radiusHead;
+  let half = 0;
   let status;
+  let test;
   do {
     radiusHead = window.prompt("Radius:");
-    status = true;
-    let half = canvas.height / 2;
-    if (Number.isNaN(radiusHead)) {
-      window.alert("Your radius is not a number.")
+    status;
+    half = canvas.height / 2;
+    test = Boolean(radiusHead);
+    if (test == false) {
+      status = true;
+    } else if (isNaN(radiusHead)) {
+      window.alert("Your radius is not a number.");
       status = false;
     } else if (radiusHead < 32) {
-      window.alert("Your radius must be at least 32.")
+      window.alert("Your radius must be at least 32.");
       status = false;
     } else if (radiusHead > half) {
-      window.alert("Your smiley face won't fit on the canvas.")
+      window.alert("Your smiley face won't fit on the canvas.");
       status = false;
     } else {
       status = true;
     }
-  } while (Number.isNaN(radiusHead) || radiusHead < 32 || radiusHead < half || status == false);
-  let radiusEye = radiusHead * 0.15;
-  let radiusMouth = radiusHead * 0.7;
-  window.alert(radiusHead + radiusEye + radiusMouth)
-  context.beginPath();
-  context.moveTo(canvas.width / 2, canvas.height / 2);
-  context.arc(canvas.width / 2, canvas.height / 2, 70, 0, 2 * Math.PI, true);
-  context.closePath();
-  context.fill();
+  } while (status == false);
+  if (test == false) {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+  } else {
+    let radiusEye = radiusHead * 0.15;
+    let radiusMouth = radiusHead * 0.7;
+    let eyePosition = radiusHead * 0.4;
+    context.beginPath();
+    context.arc(512, 256, radiusHead, 0, 2 * Math.PI, true);
+    context.stroke();
+    context.closePath();
+    context.beginPath();
+    context.arc(512, 256, radiusMouth, 0, Math.PI, false);
+    context.stroke();
+    context.closePath();
+    context.beginPath();
+    context.arc(512 - eyePosition, 256 - eyePosition, radiusEye, 0, 2 * Math.PI, true);
+    context.stroke();
+    context.closePath();
+    context.beginPath();
+    context.arc(512 + eyePosition, 256 - eyePosition, radiusEye, 0, 2 * Math.PI, true);
+    context.stroke();
+    context.closePath();
+  }
+
 
     // write your exercise 5 code here
 };
@@ -269,15 +323,15 @@ const drawPyramid = function() {
   let context = canvas.getContext("2d");
   context.clearRect(0, 0, canvas.width, canvas.height);
   let sideLength;
-  let status = true;
+  let status;
+  let test;
   do {
-    status = true;
     sideLength = Number(window.prompt("Side:"));
-    let test = Boolean(sideLength);
+    test = Boolean(sideLength);
     if (test == false) {
       status = true;
-    } else if (Number.isNaN(sideLength)) {
-      window.alert("Your block size is not a number.");;
+    } else if (isNaN(sideLength)) {
+      window.alert("Your block size is not a number.");
       status = false;
     } else if (sideLength < 1) {
       window.alert("Your block size must be at least 1.");
@@ -288,7 +342,30 @@ const drawPyramid = function() {
     } else {
       status = true;
     }
-  } while (status == false || test == true || sideLength < 1 || sideLength > 100);
+  } while (status !== true)
+  if (test == false) {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+  } else {
+    let bottomX = 10;
+    let bottomY = 402;
+    let blocks = 0;
+    let newRow = 0;
+    for (row = 5; row > 0; row = row - 1) {
+      blocks = row;
+      while (blocks >= 1) {
+        context.beginPath();
+        context.rect(bottomX, bottomY, sideLength, sideLength);
+        context.stroke();
+        context.closePath();
+
+        bottomX = bottomX + sideLength;
+        blocks = blocks - 1;
+      }
+      bottomY = bottomY - sideLength;
+      newRow = newRow + 1
+      bottomX = newRow * (sideLength / 2);
+    }
+  }
 
     // write your exercise 6 code here
 };
